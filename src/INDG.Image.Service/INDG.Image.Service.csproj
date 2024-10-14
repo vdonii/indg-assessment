@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RuntimeIdentifiers>linux-x64</RuntimeIdentifiers>
+    <EnableSdkContainerDebugging>True</EnableSdkContainerDebugging>
+    <ContainerBaseImage>mcr.microsoft.com/dotnet/aspnet:8.0</ContainerBaseImage>
+    <UserSecretsId>a8faf1cb-410f-4fd5-a8e6-57d3a25036b9</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileContext>.</DockerfileContext>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Amazon.Extensions.Configuration.SystemsManager" Version="6.2.1" />
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="AWSSDK.Core" Version="3.7.400.33" />
+    <PackageReference Include="AWSSDK.DynamoDBv2" Version="3.7.401.11" />
+    <PackageReference Include="AWSSDK.Extensions.NETCore.Setup" Version="3.7.301" />
+    <PackageReference Include="AWSSDK.S3" Version="3.7.404.5" />
+    <PackageReference Include="AWSSDK.SecurityToken" Version="3.7.400.33" />
+    <PackageReference Include="AWSSDK.SimpleSystemsManagement" Version="3.7.402.12" />
+    <PackageReference Include="Ensure.That" Version="10.1.0" />
+    <PackageReference Include="HybridModelBinding" Version="0.18.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+    <PackageReference Include="System.Drawing.Common" Version="8.0.10" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ContainerPort Include="8081" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\INDG.Image.Service.Core\INDG.Image.Service.Core.csproj" />
+  </ItemGroup>
+
+</Project>

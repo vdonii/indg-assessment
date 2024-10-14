@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <RunWorkingDirectory>$(MSBuildProjectDirectory)</RunWorkingDirectory>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="AWSSDK.AutoScaling" Version="3.7.401.31" />
+    <PackageReference Include="AWSSDK.CloudFormation" Version="3.7.400.33" />
+    <PackageReference Include="AWSSDK.Core" Version="3.7.400.33" />
+    <PackageReference Include="AWSSDK.EC2" Version="3.7.409" />
+    <PackageReference Include="AWSSDK.ElasticBeanstalk" Version="3.7.400.33" />
+    <PackageReference Include="AWSSDK.S3" Version="3.7.404.5" />
+    <PackageReference Include="AWSSDK.SecurityToken" Version="3.7.400.33" />
+    <PackageReference Include="AWSSDK.SimpleSystemsManagement" Version="3.7.402.12" />
+    <PackageReference Include="Cake.Aws.ElasticBeanstalk" Version="3.0.0" />
+    <PackageReference Include="Cake.AWS.S3" Version="1.0.0" />
+    <PackageReference Include="Cake.CloudFormation" Version="0.7.0" />
+    <PackageReference Include="Cake.Frosting" Version="4.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.17" />
+  </ItemGroup>
+</Project>

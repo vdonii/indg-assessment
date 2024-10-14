@@ -1,0 +1,15 @@
+{
+    "manifestVersion": 1,
+    "deployments": {
+      "aspNetCoreWeb": [
+        {
+          "name": "image-web-service",
+          "parameters": {
+            "appBundle": "INDG.Image.Service.zip",
+            "iisPath": "/",
+            "iisWebSite": "Default Web Site"
+          }
+        }
+      ]
+    }
+  }

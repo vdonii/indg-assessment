@@ -1,0 +1,25 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Parameters: 
+  VpcId: 
+    Type: AWS::SSM::Parameter::Value<String>
+    Description: VPC id
+    Default: /indg/assignment/VpcId
+Resources: 
+  SecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties: 
+      VpcId: !Ref VpcId
+      GroupDescription: Default SecurityGroup
+  S3Bucket:
+    Type: AWS::S3::Bucket
+    Properties:
+       BucketName: !Sub indg-assignment-base-${AWS::Region}-${AWS::AccountId}
+  ServiceS3Bucket:
+    Type: AWS::S3::Bucket
+    Properties:
+       BucketName: !Sub indg-assignment-service-${AWS::Region}-${AWS::AccountId}
+Outputs:
+    BaseS3Bucket:
+        Value: !Ref S3Bucket
+    SecurityGroupId:
+        Value: !Ref SecurityGroup

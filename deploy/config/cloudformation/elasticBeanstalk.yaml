@@ -1,0 +1,83 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Parameters:
+   S3Key: 
+    Type: String
+    Description: S3Key (zip archive name)
+Resources:
+  Application:
+    Type: AWS::ElasticBeanstalk::Application
+    Properties:
+      ApplicationName: indg-image-service-Application
+      Description: AWS Elastic Beanstalk Application
+  ApplicationVersion:
+    Type: AWS::ElasticBeanstalk::ApplicationVersion
+    Properties:
+      ApplicationName:
+        Ref: Application
+      Description: AWS ElasticBeanstalk Application Version
+      SourceBundle:
+        S3Bucket: !Sub indg-assignment-base-${AWS::Region}-${AWS::AccountId}
+        S3Key: !Ref S3Key
+  ConfigurationTemplate:
+    Type: AWS::ElasticBeanstalk::ConfigurationTemplate
+    Properties:
+      ApplicationName:
+        Ref: Application
+      Description: AWS ElasticBeanstalk Configuration
+      OptionSettings:
+      - Namespace: aws:autoscaling:asg
+        OptionName: MinSize
+        Value: '1'
+      - Namespace: aws:autoscaling:asg
+        OptionName: MaxSize
+        Value: '1'
+      - Namespace: aws:elasticbeanstalk:environment
+        OptionName: EnvironmentType
+        Value: SingleInstance
+      - Namespace: aws:autoscaling:launchconfiguration
+        OptionName: IamInstanceProfile
+        Value: !Ref InstanceProfile    
+      - Namespace: aws:autoscaling:launchconfiguration
+        OptionName: DisableIMDSv1
+        Value: true
+      - Namespace: aws:autoscaling:launchconfiguration
+        OptionName: RootVolumeType
+        Value: gp3         
+      SolutionStackName: "64bit Windows Server 2022 v2.15.5 running IIS 10.0"
+  Environment:
+    Type: AWS::ElasticBeanstalk::Environment
+    Properties:
+      EnvironmentName: indg-image-service
+      ApplicationName:
+        Ref: Application
+      Description: AWS ElasticBeanstalk Environment
+      TemplateName:
+        Ref: ConfigurationTemplate
+      VersionLabel:
+        Ref: ApplicationVersion
+  InstanceRole:
+    Type: AWS::IAM::Role
+    Properties: 
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - ec2.amazonaws.com
+            Action:
+              - sts:AssumeRole
+      Description: Beanstalk EC2 role
+      ManagedPolicyArns: 
+        - arn:aws:iam::aws:policy/AWSElasticBeanstalkWebTier
+        - arn:aws:iam::aws:policy/AWSElasticBeanstalkMulticontainerDocker
+        - arn:aws:iam::aws:policy/AWSElasticBeanstalkWorkerTier
+        - arn:aws:iam::aws:policy/AmazonS3FullAccess
+        - arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess
+        - arn:aws:iam::aws:policy/AmazonElastiCacheFullAccess
+        - arn:aws:iam::aws:policy/AmazonSSMFullAccess
+  InstanceProfile:
+    Type: AWS::IAM::InstanceProfile
+    Properties: 
+      Roles:
+        - !Ref InstanceRole
